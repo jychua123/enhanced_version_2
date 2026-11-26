@@ -1,0 +1,6 @@
+{
+  "name": "SimplyGo — Transit & Travel Card Platform",
+  "description": "One-stop platform for Singapore transit cards, SimplyGo app features, concession passes, fare tools, and ticketing service locations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
