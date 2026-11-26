@@ -90,7 +90,7 @@ export default function App() {
           <TravelCardsView
             key={selectedCardTab}
             initialTab={selectedCardTab}
-            onNavigate={(screen) => navigate(screen)}
+            onNavigate={navigate}
           />
         )}
 

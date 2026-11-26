@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Check, ArrowRight, Calculator, HelpCircle } from 'lucide-react';
 import {
+  AppFeatureId,
   CARD_CHARM_DESIGNS,
   CARD_PRODUCTS,
   ScreenId,
@@ -18,7 +19,12 @@ type CardTabId = 'ezlink' | 'charms' | 'concession' | 'motoring';
 
 interface TravelCardsViewProps {
   initialTab: CardTabId;
-  onNavigate: (screen: ScreenId) => void;
+  onNavigate: (
+    screen: ScreenId,
+    options?: {
+      appFeature?: AppFeatureId;
+    }
+  ) => void;
 }
 
 const TABS: {
@@ -51,10 +57,10 @@ const TABS: {
   },
   {
     id: 'motoring',
-    label: 'EZ-Link Motoring & EV',
+    label: 'EZ-Link Motoring',
     image: 'https://simplygo.com.sg/media/dg3phwal/ez-link-motoring.png',
     summary:
-      'Post-paid cardless billing for Electronic Road Pricing (ERP) gantries, HDB/URA carparks, and public EV charging sessions.',
+      'Compare the physical stored-value EZ-Link Motoring Card (for OBU/IU) with the cardless post-paid EZ-Link Motoring Service in the SimplyGo App.',
   },
 ];
 
@@ -170,7 +176,7 @@ export function TravelCardsView({
     <section className="py-10 lg:py-12 bg-white min-h-[calc(100vh-8rem)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <ScreenBreadcrumb
-          currentLabel="Cards & Charms"
+          currentLabel="Cards & Motoring"
           subLabel={activeTabInfo.label}
           onBackHome={() => onNavigate('home')}
         />
@@ -358,7 +364,11 @@ export function TravelCardsView({
                 <div className="mt-6 pt-5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
                   <div>
                     <span className="text-xs text-slate-500 block">
-                      {product.monthlyPassPrice ? 'Monthly Pass' : 'Typical Fare'}
+                      {product.monthlyPassPrice
+                        ? 'Monthly Pass'
+                        : product.category === 'motoring'
+                        ? 'Format'
+                        : 'Typical Fare'}
                     </span>
                     <span className="text-sm font-bold text-[#316aa1] tabular-nums">
                       {product.monthlyPassPrice || product.fareExample}
@@ -366,15 +376,49 @@ export function TravelCardsView({
                   </div>
                   <button
                     type="button"
-                    onClick={() => onNavigate('services')}
+                    onClick={() =>
+                      product.id === 'ezlink-motoring-service'
+                        ? onNavigate('app', { appFeature: 'motoring' })
+                        : product.id === 'ezlink-motoring-card'
+                        ? onNavigate('locations')
+                        : onNavigate('services')
+                    }
                     className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#ebf2f9] hover:bg-[#dce8f5] text-[#316aa1] text-sm font-semibold rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
                   >
-                    <span>Calculate Your Fare</span>
+                    <span>
+                      {product.id === 'ezlink-motoring-service'
+                        ? 'Open Motoring & EV in App'
+                        : product.id === 'ezlink-motoring-card'
+                        ? 'Find Top-Up Kiosks'
+                        : 'Calculate Your Fare'}
+                    </span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* EV Charging App Pointer (kept out of Cards, linked to App Motoring Service) */}
+        {activeTab === 'motoring' && (
+          <div className="border border-slate-200 rounded-2xl p-6 bg-[#ebf2f9]/65 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h3 className="text-base font-bold text-[#142333]">
+                Looking for EV Charging?
+              </h3>
+              <p className="text-sm text-slate-600 mt-0.5">
+                Public EV charging sessions are managed inside the SimplyGo App under Motoring Service—not as a physical card.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => onNavigate('app', { appFeature: 'motoring' })}
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[#316aa1] hover:bg-[#255582] text-white text-sm font-semibold rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+            >
+              <span>Open App Motoring & EV</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         )}
 

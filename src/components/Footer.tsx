@@ -40,7 +40,7 @@ export function Footer({ onNavigate }: FooterProps) {
               onClick={() => onNavigate('cards')}
               className="hover:text-white transition-colors cursor-pointer"
             >
-              Cards & Charms
+              Cards & Motoring
             </button>
             <button
               type="button"

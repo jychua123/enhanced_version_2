@@ -10,7 +10,7 @@ interface HeaderProps {
 
 const NAV_ITEMS: { id: ScreenId; label: string }[] = [
   { id: 'home', label: 'Home' },
-  { id: 'cards', label: 'Cards & Charms' },
+  { id: 'cards', label: 'Cards & Motoring' },
   { id: 'app', label: 'SimplyGo App' },
   { id: 'services', label: 'Online Services' },
   { id: 'locations', label: 'Locations' },

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { DiscussionEmbed } from 'disqus-react';
 import {
   ArrowRight,
   ChevronLeft,
@@ -825,6 +826,16 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
           </div>
         </div>
       )}
+
+      <DiscussionEmbed
+        shortname='simplygo-uiux'
+        config={{
+          url: typeof window !== 'undefined' ? window.location.href : 'https://simplygo.com.sg/',
+          identifier: 'simplygo-home',
+          title: 'SimplyGo — Transit & Travel Card Platform',
+          language: 'en',
+        }}
+      />
     </div>
   );
 }

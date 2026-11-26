@@ -375,6 +375,10 @@ export function OnlineServicesView({ onNavigate }: OnlineServicesViewProps) {
                   label: 'Verify Identity with Singpass',
                   feature: 'myinfo' as AppFeatureId,
                 },
+                {
+                  label: 'Manage Motoring Service & EV Charging',
+                  feature: 'motoring' as AppFeatureId,
+                },
               ].map((link) => (
                 <button
                   key={link.label}
